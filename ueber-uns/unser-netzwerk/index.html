@@ -1085,7 +1085,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     const ranked = LOCATIONS
       .map(loc => ({ ...loc, dist: distanceKm(userPos.lat, userPos.lng, loc.lat, loc.lng) }))
       .sort((a, b) => a.dist - b.dist)
-      .slice(0, 5);
+      .slice(0, 6);
 
     ranked.forEach((loc) => {
       const li = document.createElement("li");

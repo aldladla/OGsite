@@ -934,60 +934,300 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
                             <div id="c-map"
      class="o-frame o-frame--default o-frame--type-text o-frame--layout-default o-frame--size-default o-frame--height-default o-frame--background-none u-margin-top-default u-margin-bottom-default">
-  <div class="o-frame-wrapper">
-    <div class="o-frame-wrapper__inner">
-      <div class="o-wrapper">
-        <div class="o-layout">
-          <div class="o-layout__item">
-            <header class="c-header u-margin-bottom-default" style="text-align:center;">
-              <h2 class="u-heading u-heading--h2"><span>Gdzie nas znajdziesz?</span></h2>
-              <p class="c-paragraph">Oddziały i miejsca obsługi w Polsce</p>
-            </header>
 
-            <div id="map" style="height:500px; width:100%; border-radius:8px; overflow:hidden;"></div>
+     <div class="o-frame-wrapper">
+  <div class="o-frame-wrapper__inner">
+    <div class="o-wrapper">
+      <div class="o-layout">
+        <div class="o-layout__item">
+          <header class="c-header u-margin-bottom-default" style="text-align:center;">
+            <h2 class="u-heading u-heading--h2"><span>Gdzie nas znajdziesz?</span></h2>
+            <p class="c-paragraph">Oddziały i miejsca obsługi w Polsce</p>
+          </header>
+
+          <!-- Pasek wyszukiwarki -->
+          <div class="o-frame o-frame--default o-frame--background-light search-card" role="search" aria-label="Wyszukiwarka najbliższych lokalizacji">
+            <div class="search-bar">
+              <label for="address-input" class="u-hidden-visually">Adres</label>
+              <input id="address-input" class="c-input" type="text" placeholder="Np. Marszałkowska 10, Warszawa" autocomplete="off">
+              <button class="btn" id="find-nearest" type="button" aria-label="Znajdź najbliższych rzeczoznawców">Szukaj najbliższych</button>
+            </div>
+            <p class="u-text-small hint">Podpowiedzi adresów dostarcza Google Places.</p>
           </div>
+
+          <!-- LISTA WYNIKÓW -->
+          <aside class="o-frame o-frame--default results-card" aria-live="polite" aria-atomic="true">
+            <h4 class="u-heading u-heading--h4 u-margin-bottom-small">Najbliższe lokalizacje</h4>
+            <ul id="results-list" class="u-list-unstyled"></ul>
+            <p id="results-empty" class="u-text-small empty">Brak wyników — wpisz adres i kliknij „Szukaj najbliższych”.</p>
+          </aside>
+
+          <!-- MAPA -->
+          <div class="map-wrap u-margin-top-default">
+            <div id="map" class="map-big"></div>
+          </div>
+
+          <p class="u-text-small" style="opacity:.75;text-align:center;margin-top:.75rem;">
+            Dostępni również w Niemczech (200+ lokalizacji) oraz we współpracy z organizacjami w Europie.
+          </p>
+
         </div>
       </div>
     </div>
   </div>
 </div>
 
+<style>
+/* Styl wyszukiwarki i mapy – lekko, bez konfliktów */
+.search-card{
+  padding: 1.25rem; border-radius: 14px;
+  box-shadow: 0 10px 28px rgba(0,0,0,.07);
+  margin-bottom: 1rem;
+}
+.search-bar{ display:flex; gap:1rem; align-items:stretch; }
+.search-bar .c-input{ height:56px; font-size:1.05rem; padding:0 1rem; flex:1; }
+.search-bar .btn{ height:56px; font-size:1.05rem; padding:0 1.25rem; white-space:nowrap; }
+.hint{ opacity:.7; margin:.5rem 0 0 2px; }
+
+.results-card{ margin-bottom:1rem; }
+#results-list{
+  display:grid; gap:12px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  margin:0; padding:0;
+}
+.result-item{ list-style:none; }
+.result-btn{
+  width:100%; display:grid; grid-template-columns: 40px 1fr auto; gap:12px; align-items:center;
+  background:#fff; border:1px solid rgba(0,0,0,.08); border-radius:12px; padding:.9rem 1rem; text-align:left; cursor:pointer;
+  transition: box-shadow .18s, transform .04s, border-color .18s, background .18s;
+}
+.result-btn:hover{ border-color:rgba(0,0,0,.14); box-shadow:0 8px 24px rgba(0,0,0,.08); }
+.result-btn:active{ transform: translateY(1px); }
+.result-btn:focus{ outline:3px solid rgba(210,9,30,.25); outline-offset:2px; }
+.result-avatar{ width:40px; height:40px; border-radius:50%; display:grid; place-items:center; background:#f3f4f6; font-size:18px; }
+.result-main{ display:grid; }
+.result-name{ font-weight:700; line-height:1.2; }
+.result-city{ font-size:.92rem; opacity:.8; }
+.result-distance{ justify-self:end; font-size:.92rem; font-weight:700; padding:.35rem .6rem; border-radius:999px; background:#d2091e; color:#fff; white-space:nowrap; }
+
+.map-wrap{
+  position: relative; border-radius: 16px; overflow: hidden;
+  background: #f6f7f9; box-shadow: 0 16px 40px rgba(0,0,0,.10);
+}
+.map-big{ width:100%; height:720px; display:block; border-radius:16px; }
+
+@media (max-width: 540px){
+  #results-list{ grid-template-columns: 1fr; }
+  .map-big{ height: 480px; }
+}
+</style>
+
 <script>
-  function initMap() {
-    const center = { lat: 52.2297, lng: 21.0122 }; // Warszawa
-    const map = new google.maps.Map(document.getElementById("map"), {
-      zoom: 6,
-      center: center,
+  // PUNKTY SIECI – dopisz swoje lokalizacje
+  const LOCATIONS = [
+    { name: "Rzeczoznawca Warszawa",  lat: 52.2297, lng: 21.0122, address: "Warszawa" },
+    { name: "Rzeczoznawca Pruszków",  lat: 52.1700, lng: 20.8100, address: "Pruszków" },
+    { name: "Rzeczoznawca Legionowo", lat: 52.4000, lng: 20.9333, address: "Legionowo" },
+    { name: "Rzeczoznawca Piaseczno", lat: 52.0811, lng: 21.0267, address: "Piaseczno" },
+    { name: "Rzeczoznawca Wołomin",   lat: 52.3400, lng: 21.2420, address: "Wołomin" },
+    { name: "Rzeczoznawca Otwock",    lat: 52.1056, lng: 21.2619, address: "Otwock" },
+
+    { name: "Rzeczoznawca Kraków",    lat: 50.0647, lng: 19.9450, address: "Kraków" },
+    { name: "Rzeczoznawca Gdańsk",    lat: 54.3520, lng: 18.6466, address: "Gdańsk" },
+    { name: "Rzeczoznawca Wrocław",   lat: 51.1079, lng: 17.0385, address: "Wrocław" }
+  ];
+
+  let map, infoWin, markers = [], autocomplete, userPos = null;
+
+  // nowy loader: importLibrary + AdvancedMarkerElement (bez deprec. warningów)
+// zakładam, że masz globalne: let map, infoWin, markers = [];
+async function initMap() {
+  // Załaduj biblioteki równolegle
+  const [{ Map }, { AdvancedMarkerElement }] = await Promise.all([
+    google.maps.importLibrary("maps"),
+    google.maps.importLibrary("marker"),
+  ]);
+
+  const center = { lat: 52.2297, lng: 21.0122 };
+
+  map = new Map(document.getElementById("map"), {
+    center,
+    zoom: 6,
+    mapId: "DEMO_MAP_ID", // <— podmień na swój Map ID z Cloud Console
+  });
+
+  infoWin = new google.maps.InfoWindow();
+
+  // Markery z nowej klasy
+  markers = LOCATIONS.map((loc) => {
+    const marker = new AdvancedMarkerElement({
+      map,
+      position: { lat: loc.lat, lng: loc.lng },
+      title: loc.name,
+    });
+    marker.rloc = loc;
+    marker.addListener("click", () => openInfo(marker));
+    return marker;
+  });
+
+
+
+    // Autocomplete (Places)
+    const input = document.getElementById("address-input");
+    if (google.maps.places?.Autocomplete && input) {
+      autocomplete = new google.maps.places.Autocomplete(input, {
+        fields: ["geometry", "formatted_address"],
+        componentRestrictions: { country: "pl" }
+      });
+      autocomplete.addListener("place_changed", () => {
+        const place = autocomplete.getPlace();
+        if (!place?.geometry?.location) return;
+        userPos = {
+          lat: place.geometry.location.lat(),
+          lng: place.geometry.location.lng(),
+          address: place.formatted_address
+        };
+        map.panTo(place.geometry.location);
+        map.setZoom(10);
+      });
+    } else {
+      console.warn("Places library niezaładowana – sprawdź param. &libraries=places");
+    }
+
+    wireSearchHandlers();
+    const empty = document.getElementById("results-empty");
+    if (empty) empty.style.display = "block";
+  }
+  window.initMap = initMap; // callback dla loadera
+
+  function openInfo(marker) {
+    const { name, lat, lng, address } = marker.rloc;
+    const html = `
+      <strong>${name}</strong><br>
+      <span style="opacity:.8;">${address || ""}</span><br>
+      <a target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}">Wyznacz trasę</a>`;
+    infoWin.setContent(html);
+    infoWin.open({ map, anchor: marker });
+  }
+
+  function wireSearchHandlers() {
+    const btn = document.getElementById("find-nearest");
+    const input = document.getElementById("address-input");
+    if (!btn || !input) return;
+
+    btn.addEventListener("click", () => {
+      const typed = (input.value || "").trim();
+
+      if (typed) {
+        geocodeAddress(typed, (pos) => {
+          userPos = pos;
+          map.panTo({ lat: pos.lat, lng: pos.lng });
+          map.setZoom(10);
+          showNearest();
+        }, () => alert("Nie udało się znaleźć tego adresu. Spróbuj doprecyzować."));
+        return;
+      }
+
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (pos) => {
+            userPos = { lat: pos.coords.latitude, lng: pos.coords.longitude, address: "Twoja lokalizacja" };
+            showNearest();
+          },
+          () => alert("Wpisz adres lub włącz geolokalizację."),
+          { enableHighAccuracy: true, timeout: 8000 }
+        );
+      } else {
+        alert("Wpisz adres w polu wyszukiwania.");
+      }
     });
 
-    const locations = [
-      { name: "Rzeczoznawca Warszawa", position: { lat: 52.2297, lng: 21.0122 } },
-      { name: "Rzeczoznawca Kraków",   position: { lat: 50.0647, lng: 19.9450 } },
-      { name: "Rzeczoznawca Gdańsk",   position: { lat: 54.3520, lng: 18.6466 } },
-      { name: "Rzeczoznawca Wrocław",  position: { lat: 51.1079, lng: 17.0385 } }
-    ];
-
-    locations.forEach(loc => {
-      const marker = new google.maps.Marker({
-        position: loc.position,
-        map: map,
-        title: loc.name,
-      });
-
-      const infowindow = new google.maps.InfoWindow({
-        content: `<strong>${loc.name}</strong>`,
-      });
-
-      marker.addListener("click", () => {
-        infowindow.open(map, marker);
-      });
+    input.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        btn.click();
+      }
     });
+  }
+
+  function geocodeAddress(query, ok, fail) {
+    const geocoder = new google.maps.Geocoder();
+    geocoder.geocode({ address: query, componentRestrictions: { country: "pl" } }, (results, status) => {
+      if (status === "OK" && results?.length) {
+        const loc = results[0].geometry.location;
+        ok({ lat: loc.lat(), lng: loc.lng(), address: results[0].formatted_address });
+      } else {
+        fail?.(status);
+      }
+    });
+  }
+
+  // dystans haversine (km)
+  function distanceKm(aLat, aLng, bLat, bLng) {
+    const toRad = v => v * Math.PI / 180, R = 6371;
+    const dLat = toRad(bLat - aLat), dLng = toRad(bLng - aLng);
+    const lat1 = toRad(aLat), lat2 = toRad(bLat);
+    const x = Math.sin(dLat/2)**2 + Math.cos(lat1)*Math.cos(lat2)*Math.sin(dLng/2)**2;
+    return R * 2 * Math.atan2(Math.sqrt(x), Math.sqrt(1 - x));
+  }
+
+  function showNearest() {
+    const list = document.getElementById("results-list");
+    const empty = document.getElementById("results-empty");
+    if (!list) return;
+
+    list.innerHTML = "";
+    if (!userPos) {
+      if (empty) empty.style.display = "block";
+      return;
+    }
+
+    const ranked = LOCATIONS
+      .map(loc => ({ ...loc, dist: distanceKm(userPos.lat, userPos.lng, loc.lat, loc.lng) }))
+      .sort((a, b) => a.dist - b.dist)
+      .slice(0, 6);
+
+    ranked.forEach(loc => {
+      const li = document.createElement("li");
+      li.className = "result-item";
+      li.innerHTML = `
+        <button class="result-btn" data-lat="${loc.lat}" data-lng="${loc.lng}" data-name="${loc.name}">
+          <span class="result-avatar">📍</span>
+          <span class="result-main">
+            <span class="result-name">${loc.name}</span>
+            <span class="result-city">${loc.address || ""}</span>
+          </span>
+          <span class="result-distance">${loc.dist.toFixed(1)} km</span>
+        </button>`;
+      list.appendChild(li);
+    });
+
+    if (empty) empty.style.display = ranked.length ? "none" : "block";
+
+    // dopasuj kadr
+    const bounds = new google.maps.LatLngBounds();
+    bounds.extend(new google.maps.LatLng(userPos.lat, userPos.lng));
+    ranked.forEach(loc => bounds.extend(new google.maps.LatLng(loc.lat, loc.lng)));
+    map.fitBounds(bounds);
+
+    // klik w liście
+    list.onclick = (e) => {
+      const btn = e.target.closest("button[data-lat]");
+      if (!btn) return;
+      const lat = parseFloat(btn.dataset.lat), lng = parseFloat(btn.dataset.lng);
+      const marker = markers.find(m => m.rloc.lat === lat && m.rloc.lng === lng);
+      if (marker) {
+        map.panTo({ lat, lng });
+        map.setZoom(12);
+        openInfo(marker);
+      }
+    };
   }
 </script>
 
-<!-- Ładowanie Google Maps API -->
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAps_33E1b578-hWPwfQxuWM93i5upNdFE&callback=initMap" async defer></script>
-
+<!-- Loader Google Maps (Places + nowy tryb ładowania) -->
+<script async
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAps_33E1b578-hWPwfQxuWM93i5upNdFE &libraries=places&callback=initMap&loading=async">
+</script>
 
 
 

@@ -772,120 +772,125 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 
 
+<section id="partners" class="o-frame o-frame--default u-margin-top-default u-margin-bottom-default">
+  <div class="o-frame-wrapper">
+    <div class="o-frame-wrapper__inner">
+      <div class="o-wrapper">
+        <div class="o-layout">
+          <div class="o-layout__item">
 
+            <header class="c-header">
+              <h2 class="u-heading u-heading--h2"><span>Współpraca</span></h2>
+              <h3 class="u-subheading u-heading--h3"><span>Nasza silna sieć na każdą sytuację</span></h3>
+            </header>
 
+            <p>
+              Pol-Claims łączy doświadczenie własnych rzeczoznawców z siecią sprawdzonych partnerów, aby prowadzić sprawy
+              szybko, przejrzyście i skutecznie — od weryfikacji dokumentów, przez ekspertyzy i kontrolę kosztorysów,
+              po międzynarodową likwidację szkód.
+            </p>
 
+            <!-- DLACZEGO Z NAMI — argumenty w punktach -->
+            <h4 class="u-heading u-heading--h4 u-margin-bottom-small">Dlaczego z nami</h4>
+            <ul class="dot-list" aria-label="Najważniejsze argumenty współpracy">
+              <li>Krótszy czas likwidacji – ustalone SLA i szybka koordynacja działań.</li>
+              <li>Niższe ryzyko błędów – weryfikacja dokumentów i kosztorysów na każdym etapie.</li>
+              <li>Jedno miejsce kontaktu – pełna koordynacja procesu od zgłoszenia do rozliczenia.</li>
+              <li>Standardy i audyty jakości – spójne wyniki w całej Polsce i UE.</li>
+              <li>Pełna transparentność – raporty statusowe, dokumentacja, śledzalność decyzji.</li>
+              <li>Wsparcie transgraniczne – obsługa spraw międzynarodowych we współpracy z partnerami.</li>
+            </ul>
 
+            <!-- Pasek liczb (KPI) -->
+            <ul class="kpis" aria-label="Najważniejsze fakty">
+              <li><strong>24h</strong><span>start działań od zgłoszenia*</span></li>
+              <li><strong>200+</strong><span>lokalizacji w sieci</span></li>
+              <li><strong>98%</strong><span>spraw bez uwag formalnych*</span></li>
+              <li><strong>1 zespół</strong><span>od analizy do rozliczenia</span></li>
+            </ul>
 
+            <!-- 3 kroki współpracy -->
+            <section class="steps-lite" aria-label="Jak współpracujemy">
+              <article>
+                <h5>1. Zgłoszenie</h5>
+                <p>Przyjmujemy dokumenty i zakres — potwierdzamy termin oraz wymagane materiały.</p>
+              </article>
+              <article>
+                <h5>2. Ekspertyza</h5>
+                <p>Oględziny, kalkulacja, weryfikacja kosztorysu/dokumentów, raport ze zdjęciami.</p>
+              </article>
+              <article>
+                <h5>3. Decyzja i rozliczenie</h5>
+                <p>Rekomendacje, wsparcie negocjacji, komplet pod rozliczenie.</p>
+              </article>
+            </section>
 
+            <!-- Obraz -->
+            <figure class="c-image u-margin-top-default">
+              <picture>
+                <source media="(min-width: 1300px)" srcset="../../media/_processed_/8/a/csm_SSH_Gutachter_spricht_mit_Kunden_c9c125747b.jpg 1x">
+                <source media="(min-width: 1200px)" srcset="../../media/_processed_/8/a/csm_SSH_Gutachter_spricht_mit_Kunden_c9c125747b.jpg 1x">
+                <source media="(min-width: 980px)"  srcset="../../media/_processed_/8/a/csm_SSH_Gutachter_spricht_mit_Kunden_aea6354dea.jpg 1x">
+                <source media="(min-width: 740px)"  srcset="../../media/_processed_/8/a/csm_SSH_Gutachter_spricht_mit_Kunden_f4d0944e8a.jpg 1x">
+                <source media="(min-width: 576px)"  srcset="../../media/_processed_/8/a/csm_SSH_Gutachter_spricht_mit_Kunden_f4d0944e8a.jpg 1x">
+                <img loading="lazy"
+                     src="../../media/_processed_/8/a/csm_SSH_Gutachter_spricht_mit_Kunden_b234f8759b.jpg"
+                     width="927" height="522"
+                     alt="Rzeczoznawca rozmawia z klientem — współpraca Pol-Claims i partnerów">
+              </picture>
+            </figure>
 
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
+<style>
+/* Więcej oddechu w sekcji */
+#partners .c-header { margin-bottom: .9rem; }
+#partners p { max-width: 70ch; line-height: 1.6; }
+#partners .dot-list { margin-top: .75rem; gap: .6rem 1.1rem; }
+#partners .c-image { margin-top: 1.5rem; }
+#partners .c-image img { border-radius: 18px; box-shadow: 0 14px 40px rgba(0,0,0,.08); }
 
+/* Czerwone kropki – argumenty */
+.dot-list{
+  list-style:none; padding-left:0; margin:.5rem 0 1.25rem;
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:.4rem .9rem;
+}
+.dot-list li{ position:relative; padding-left:1.1rem; line-height:1.45; }
+.dot-list li::before{
+  content:""; position:absolute; left:0; top:.6em;
+  width:8px; height:8px; border-radius:50%; background:#d2091e;
+}
 
+/* Pasek KPI */
+#partners .kpis{
+  list-style:none; padding:0; margin: 1rem 0 1.25rem;
+  display:grid; grid-template-columns: repeat(auto-fit, minmax(180px,1fr)); gap:12px;
+}
+#partners .kpis li{
+  background:#fff; border:1px solid rgba(0,0,0,.08); border-radius:12px;
+  padding:.85rem 1rem; box-shadow:0 8px 26px rgba(0,0,0,.06);
+  display:grid; gap:.2rem; justify-items:start;
+}
+#partners .kpis strong{ font-size:1.35rem; line-height:1; }
+#partners .kpis span{ opacity:.8; font-size:.92rem; }
 
-                            <div id="c2784"
-                                class="o-frame o-frame--default o-frame--type-text o-frame--layout-default o-frame--size-default o-frame--height-default o-frame--background-none u-margin-top-default u-margin-bottom-default">
-                                <div class="o-frame-wrapper">
-                                    <div class="o-frame-wrapper__inner">
-                                        <div class="o-wrapper">
-                                            <div class="o-layout">
-                                                <div class="o-layout__item">
-                                                    <header class="c-header">
-                                                        <h1 class="u-heading u-heading--h1 "><span>Współpraca </span>
-                                                        </h1>
-                                                        <h2 class="u-subheading u-heading--h2 "><span>Nasza silna sieć na każdą sytuację.</span></h2>
-                                                    </header>
-                                                    <p>Pol-Claims stawia nie tylko na wewnętrzne doświadczenie i wiedzę ekspercką, ale także na solidne partnerstwa, aby zapewnić klientom jak najlepsze rozwiązania we wszystkich sprawach związanych ze szkodami komunikacyjnymi. Dzięki współpracy z takimi partnerami jak weryfikator dokumentów i faktur PremiumCheck, giełda wartości pojazdów powypadkowych net.casion, międzynarodowy likwidator szkód AVUS oraz organizacja kontrolna GTU, tworzymy kompleksową i wydajną platformę usług, która wyróżnia się jakością, precyzją i profesjonalną obsługą.&nbsp;<strong><a
-                                                              ></p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                            <div id="c2866"
-                                class="o-frame o-frame--default o-frame--type-text o-frame--layout-default o-frame--size-default o-frame--height-default o-frame--background-none u-margin-top-default u-margin-bottom-default">
-                                <div class="o-frame-wrapper">
-                                    <div class="o-frame-wrapper__inner">
-                                        <div class="o-wrapper">
-                                            <div class="o-layout">
-                                                <div class="o-layout__item">
-                                                    <p><strong>1.Partnerstwa zapewniające kompleksowe rozwiązania: </strong><br>
-                                                       Współpraca z wybranymi partnerami umożliwia nam oferowanie klientom kompleksowej obsługi – od analizy szkody, poprzez przygotowanie ekspertyzy, aż po kontrolę kosztorysów. Nasze partnerstwa gwarantują sprawny przebieg wszystkich procesów.</p>
-                                                    <p><strong>2. Najwyższa jakość dzięki sieci ekspertów:</strong><br>
-                                                        Nasi partnerzy są starannie wybierani i muszą spełniać rygorystyczne standardy jakości, co zapewnia najwyższy poziom usług na każdym etapie.
-                                                    </p>
-                                                    <p><strong>3. Klient w centrum uwagi:</strong><br>Wszystkie nasze współprace są ukierunkowane na jak najlepsze doświadczenie klienta. Dzięki bliskiej koordynacji i przejrzystej komunikacji z partnerami dbamy o to, by potrzeby klienta były zawsze na pierwszym miejscu. To pozwala nam szybko i skutecznie rozwiązywać sprawy związane z likwidacją szkód komunikacyjnych.</p>
-                                                    <p><strong>4. Synergia dla większej efektywności</strong><br>Współpraca z różnymi partnerami pozwala nam osiągać efekty synergii, które przyspieszają procesy i optymalizują koszty – a z tych korzyści bezpośrednio korzystają nasi klienci.</p>
-                                                    <p>Podsumowując – nasze partnerstwa to nie tylko narzędzie, ale fundament naszej filozofii działania. Dzięki silnej sieci ekspertów nasi klienci mogą liczyć na rzetelne, szybkie i wysokiej jakości wsparcie przy każdej szkodzie komunikacyjnej.</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                                                        <div id="c2786"
-                                class="o-frame o-frame--default o-frame--type-image o-frame--layout-default o-frame--size-default o-frame--height-default o-frame--background-none u-margin-top-default u-margin-bottom-default">
-                                <div class="o-frame-wrapper">
-                                    <div class="o-frame-wrapper__inner">
-                                        <div class="o-wrapper">
-                                            <div class="o-layout">
-                                                <div class="o-layout__item">
-                                                    <div class="o-flex">
-                                                        <div class="o-flex__item u-1/1">
-                                                            <figure class="c-image">
-                                                                <picture>
-                                                                    <source data-variant="default" data-maxwidth="927"
-                                                                        media="(min-width: 1300px)"
-                                                                        srcset="/media/_processed_/8/a/csm_SSH_Gutachter_spricht_mit_Kunden_c9c125747b.jpg 1x">
-                                                                    <source data-variant="wide" data-maxwidth="860"
-                                                                        media="(min-width: 1200px)"
-                                                                        srcset="/media/_processed_/8/a/csm_SSH_Gutachter_spricht_mit_Kunden_c9c125747b.jpg 1x">
-                                                                    <source data-variant="desktop" data-maxwidth="699"
-                                                                        media="(min-width: 980px)"
-                                                                        srcset="/media/_processed_/8/a/csm_SSH_Gutachter_spricht_mit_Kunden_aea6354dea.jpg 1x">
-                                                                    <source data-variant="tablet" data-maxwidth="500"
-                                                                        media="(min-width: 740px)"
-                                                                        srcset="/media/_processed_/8/a/csm_SSH_Gutachter_spricht_mit_Kunden_f4d0944e8a.jpg 1x">
-                                                                    <source data-variant="mobile_landscape"
-                                                                        data-maxwidth="575" media="(min-width: 576px)"
-                                                                        srcset="/media/_processed_/8/a/csm_SSH_Gutachter_spricht_mit_Kunden_f4d0944e8a.jpg 1x">
-                                                                    <source data-variant="mobile" data-maxwidth="432"
-                                                                        srcset="/media/_processed_/8/a/csm_SSH_Gutachter_spricht_mit_Kunden_f4d0944e8a.jpg 1x">
-                                                                    <img loading="lazy"
-                                                                        src="../../media/_processed_/8/a/csm_SSH_Gutachter_spricht_mit_Kunden_b234f8759b.jpg"
-                                                                        width="927" height="522" intrinsicsize="927x522"
-                                                                        title="" alt="">
-                                                                </picture>
-                                                            </figure>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-
+/* 3 kroki */
+#partners .steps-lite{
+  display:grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
+  gap:12px; margin: .25rem 0 1.25rem;
+}
+#partners .steps-lite article{
+  background:#fff; border:1px solid rgba(0,0,0,.08); border-radius:12px;
+  padding: .9rem 1rem; box-shadow:0 8px 26px rgba(0,0,0,.06);
+}
+#partners .steps-lite h5{ margin:0 0 .25rem; font-size:1.05rem; }
+#partners .steps-lite p{ margin:0; opacity:.9; }
+</style>
 
 
 
