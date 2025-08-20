@@ -17012,4 +17012,25 @@ a.btn--flat.btn--small {
     }
 }
 
+/* 1) Wyłącz guttery z ujemnym marginesem na małych ekranach */
+@media (max-width: 55.365em) {
+  .o-layout { margin-left: 0 !important; }
+  .o-layout__item { padding-left: 0 !important; }
+}
+
+/* 2) Hero: upewnij się, że obrazek nie „wystaje” i nic go nie przesuwa */
+.c-heroteaser { overflow: hidden; } /* obcina ewentualne wychylenia */
+.c-heroteaser__image,
+.c-heroteaser__image picture,
+.c-heroteaser__image img {
+  width: 100% !important;
+  max-width: 100% !important;
+  height: auto !important;
+  display: block;
+}
+
+/* 3) Parasol bezpieczeństwa – ukrywa ewentualne resztki overflow */
+html, body { overflow-x: hidden; }
+
+
 /*# sourceMappingURL=app.c539b9f2.css.map*/
