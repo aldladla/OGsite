@@ -989,6 +989,18 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   #results-list{ grid-template-columns: 1fr; }
   .map-big{ height: 480px; }
 }
+
+@media (max-width: 600px) {
+  .search-bar {
+    flex-direction: column;
+    gap: .75rem;
+  }
+  .search-bar .c-input,
+  .search-bar .btn {
+    width: 100%;
+  }
+}
+
 </style>
 
 <script>
