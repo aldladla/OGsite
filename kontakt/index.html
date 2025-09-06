@@ -959,9 +959,9 @@ form.addEventListener('submit', async (e) => {
   if (!form.reportValidity()) return;
 
   const fd = new FormData(form);
-  if (fd.get('company')) return; // honeypot
+  if (fd.get('company')) return;
 
-  const body = new URLSearchParams(fd); // <-- to jest kluczowe
+  const body = new URLSearchParams(fd);
   statusEl.textContent = 'Wysyłanie…';
 
   try {
@@ -970,12 +970,12 @@ form.addEventListener('submit', async (e) => {
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body
     });
-    const data = await res.json().catch(() => ({}));
-    if (!res.ok) throw new Error(data.error || 'HTTP ' + res.status);
+    const data = await res.json().catch(()=>({}));
+    if (!res.ok) throw new Error(data.error || ('HTTP ' + res.status));
     statusEl.textContent = 'Dziękujemy! Wysłano.';
     form.reset();
   } catch (err) {
-    statusEl.textContent = 'Błąd wysyłki: ' + (err.message || 'Spróbuj ponownie.');
+    statusEl.textContent = 'Błąd wysyłki: ' + err.message;
   }
 });
 </script>

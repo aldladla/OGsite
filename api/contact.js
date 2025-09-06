@@ -1,16 +1,13 @@
-import { Resend } from 'resend';
-
+// /api/contact.js – wersja bez paczek (REST fetch)
 export const config = { api: { bodyParser: false } };
 
 function parseUrlEncoded(buf) {
-  const body = buf.toString();
-  const pairs = body.split('&').filter(Boolean);
   const out = {};
-  for (const p of pairs) {
+  const body = buf.toString();
+  for (const p of body.split('&')) {
+    if (!p) continue;
     const [k, v = ''] = p.split('=');
-    const key = decodeURIComponent(k);
-    const val = decodeURIComponent(v.replace(/\+/g, ' '));
-    out[key] = val;
+    out[decodeURIComponent(k)] = decodeURIComponent(v.replace(/\+/g, ' '));
   }
   return out;
 }
@@ -19,43 +16,46 @@ export default async (req, res) => {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
   try {
-    // 1) surowe body
+    // 1) wczytaj body url-encoded
     const chunks = [];
     for await (const c of req) chunks.push(c);
-    const buf = Buffer.concat(chunks);
-
-    // 2) upewnij się, że front wysyła url-encoded
-    const ct = req.headers['content-type'] || '';
-    if (!ct.includes('application/x-www-form-urlencoded')) {
-      return res.status(400).json({ error: 'Invalid Content-Type. Expect application/x-www-form-urlencoded' });
-    }
-
-    const fields = parseUrlEncoded(buf);
+    const fields = parseUrlEncoded(Buffer.concat(chunks));
     const { name, email, message, gdpr, company } = fields;
 
-    // 3) honeypot + walidacja
-    if (company) return res.status(200).json({ ok: true });
+    // 2) walidacja
+    if (company) return res.status(200).json({ ok: true }); // honeypot
     if (!name || !email || !message || !gdpr) {
       return res.status(400).json({ error: 'Brakuje wymaganych pól' });
     }
 
-    // 4) klucz Resend
+    // 3) klucz API
     const apiKey = process.env.RESEND_API_KEY;
     if (!apiKey) {
       console.error('Brak RESEND_API_KEY');
-      return res.status(500).json({ error: 'Brak konfiguracji e-mail (RESEND_API_KEY)' });
+      return res.status(500).json({ error: 'Brak konfiguracji e‑mail' });
     }
 
-    const resend = new Resend(apiKey);
-
-    // 5) na czas testów użyj nadawcy Resend
-    await resend.emails.send({
-      from: 'onboarding@resend.dev',   // po weryfikacji domeny podmień na swój
-      to: 'sshdeweloperzy@gmail.com',  // adres docelowy
-      reply_to: email,
-      subject: `Wiadomość ze strony – ${name}`,
-      text: `Imię i nazwisko: ${name}\nE-mail: ${email}\n\nWiadomość:\n${message}`
+    // 4) wysyłka maila bez SDK – czysty HTTP
+    const r = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        from: 'onboarding@resend.dev',         // do testów; po SPF/DKIM zmień na swój
+        to: ['sshdeweloperzy@gmail.com'],      // docelowy adres
+        reply_to: email,
+        subject: `Wiadomość ze strony – ${name}`,
+        text: `Imię i nazwisko: ${name}\nE-mail: ${email}\n\nWiadomość:\n${message}`
+      })
     });
+
+    const data = await r.json().catch(() => ({}));
+    if (!r.ok) {
+      console.error('Resend error:', data);
+      return res.status(502).json({ error: 'Email provider error' });
+    }
 
     return res.status(200).json({ ok: true });
   } catch (e) {
