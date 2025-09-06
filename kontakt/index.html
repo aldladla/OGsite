@@ -938,17 +938,112 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   </div>
 </div>
 
-<section class="contact-form-block">
-  <form id="contact-form" novalidate>
-    <label>Imię i nazwisko <input name="name" required></label>
-    <label>E‑mail <input name="email" type="email" required></label>
-    <label>Wiadomość <textarea name="message" rows="5" required></textarea></label>
-    <label><input type="checkbox" name="gdpr" required> Zgoda RODO</label>
-    <input type="text" name="company" tabindex="-1" style="position:absolute;left:-9999px">
-    <button type="submit">Wyślij</button>
-    <p id="form-status" aria-live="polite"></p>
-  </form>
+<!-- === FORMULARZ: DÓŁ STRONY === -->
+<section id="kontakt-form" class="contact-form-block u-margin-top-large">
+  <header class="c-header u-margin-bottom-small">
+    <h2 class="u-heading u-heading--h2">Napisz do nas</h2>
+    <p class="u-color-muted">Wypełnij formularz – odpowiemy możliwie szybko.</p>
+  </header>
+
+  <div class="contact-card">
+    <form id="contact-form" class="contact-form" novalidate>
+      <div class="form-grid">
+        <div class="form-field">
+          <label for="cf-name">Imię i nazwisko <span class="req">*</span></label>
+          <input id="cf-name" name="name" class="c-input" type="text" required minlength="2" autocomplete="name">
+        </div>
+
+        <div class="form-field">
+          <label for="cf-email">E‑mail <span class="req">*</span></label>
+          <input id="cf-email" name="email" class="c-input" type="email" required autocomplete="email">
+        </div>
+
+        <div class="form-field">
+          <label for="cf-phone">Telefon (opcjonalnie)</label>
+          <input id="cf-phone" name="phone" class="c-input" type="tel" inputmode="tel" placeholder="+48 600 000 000">
+        </div>
+
+        <div class="form-field form-field--full">
+          <label for="cf-msg">Wiadomość <span class="req">*</span></label>
+          <textarea id="cf-msg" name="message" class="c-input" rows="7" required></textarea>
+        </div>
+
+        <div class="form-field form-field--full">
+          <label class="consent">
+            <input type="checkbox" name="gdpr" required>
+            Zgadzam się na przetwarzanie danych w celu kontaktu (RODO).
+          </label>
+        </div>
+      </div>
+
+      <!-- honeypot -->
+      <input type="text" name="company" class="hp" tabindex="-1" autocomplete="off">
+
+      <div class="form-actions">
+        <button type="submit" class="btn btn-large">Wyślij</button>
+        <p id="form-status" class="form-status" aria-live="polite" role="status"></p>
+      </div>
+
+      <p class="privacy-note">
+        Przesyłając do nas wiadomość, akceptujesz przetwarzanie danych w celu obsługi zapytania.
+        Szczegóły: <a href="/politykaprywatnosci" target="_blank" rel="noopener">Polityka prywatności</a>.
+      </p>
+    </form>
+  </div>
 </section>
+
+
+
+<style>
+/* Karta + pozycja */
+.contact-form-block{ max-width: 920px; margin: 0 auto; }
+.contact-card{
+  background:#f6f7f9;
+  border:1px solid #e5e7eb;
+  border-radius:16px;
+  padding:24px;
+  box-shadow:0 12px 32px rgba(0,0,0,.07);
+}
+
+/* Siatka */
+.contact-form .form-grid{
+  display:grid; gap:18px; grid-template-columns:1fr;
+}
+@media (min-width: 900px){
+  .contact-form .form-grid{ grid-template-columns: 1fr 1fr; }
+  .contact-form .form-field--full{ grid-column: 1 / -1; }
+}
+
+/* Etykiety i pola – POWIĘKSZONE */
+.contact-form label{ display:block; font-weight:600; margin-bottom:8px; }
+.contact-form .c-input{
+  width:100%;
+  font-size:1.05rem;
+  padding:14px 14px;
+  border:1px solid #cfd4da;
+  border-radius:10px;
+  line-height:1.2;
+}
+.contact-form textarea.c-input{ min-height: 180px; }
+.contact-form .req{ color:#d2091e; font-weight:700; }
+.consent{ font-weight:400; display:flex; align-items:center; gap:.6rem; }
+
+/* Akcje + status */
+.form-actions{ display:flex; gap:14px; align-items:center; margin-top:12px; }
+.btn.btn-large{ padding:14px 22px; font-size:1.05rem; border-radius:10px; }
+.form-status{ font-size:.98rem; opacity:.9; }
+.form-status.ok{ color:#0a7a26; }
+.form-status.err{ color:#b00020; }
+.privacy-note{ margin-top:16px; font-size:.95rem; color:#444; }
+
+/* Honeypot */
+.hp{ position:absolute; left:-9999px; width:1px; height:1px; }
+
+/* Prosta walidacja wizualna */
+.c-input.is-invalid{ border-color:#d2091e; box-shadow:0 0 0 3px rgba(210,9,30,.12); }
+
+
+</style>
 
 <script>
 const form = document.getElementById('contact-form');
@@ -956,15 +1051,25 @@ const statusEl = document.getElementById('form-status');
 
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
-  if (!form.reportValidity()) return;
+
+  statusEl.textContent = '';
+  statusEl.classList.remove('ok','err');
+  [...form.querySelectorAll('.c-input')].forEach(i => i.classList.remove('is-invalid'));
+
+  if (!form.reportValidity()) {
+    [...form.querySelectorAll('[required]')].forEach(el => {
+      if (!el.checkValidity()) el.classList?.add('is-invalid');
+    });
+    return;
+  }
 
   const fd = new FormData(form);
-  if (fd.get('company')) return;
+  if (fd.get('company')) return; // honeypot
 
-  const body = new URLSearchParams(fd);
   statusEl.textContent = 'Wysyłanie…';
 
   try {
+    const body = new URLSearchParams(fd);
     const res = await fetch('/api/contact', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -973,12 +1078,16 @@ form.addEventListener('submit', async (e) => {
     const data = await res.json().catch(()=>({}));
     if (!res.ok) throw new Error(data.error || ('HTTP ' + res.status));
     statusEl.textContent = 'Dziękujemy! Wysłano.';
+    statusEl.classList.add('ok');
     form.reset();
   } catch (err) {
     statusEl.textContent = 'Błąd wysyłki: ' + err.message;
+    statusEl.classList.add('err');
   }
 });
 </script>
+
+
 
 
 
