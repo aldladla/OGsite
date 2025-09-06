@@ -951,18 +951,31 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 </section>
 
 <script>
-const f=document.getElementById('contact-form'), s=document.getElementById('form-status');
-f.addEventListener('submit',async e=>{
+const form = document.getElementById('contact-form');
+const statusEl = document.getElementById('form-status');
+
+form.addEventListener('submit', async (e) => {
   e.preventDefault();
-  if(!f.reportValidity()) return;
-  const fd=new FormData(f);
-  if(fd.get('company')) return; // honeypot
-  s.textContent='Wysyłanie…';
-  try{
-    const r=await fetch('/api/contact',{method:'POST',body:fd});
-    if(!r.ok) throw 0;
-    s.textContent='Dziękujemy! Wysłano.'; f.reset();
-  }catch{ s.textContent='Błąd wysyłki. Spróbuj ponownie.'; }
+  if (!form.reportValidity()) return;
+
+  const fd = new FormData(form);
+  if (fd.get('company')) return; // honeypot
+
+  const body = new URLSearchParams(fd); // <-- kluczowa zmiana (url-encoded)
+  statusEl.textContent = 'Wysyłanie…';
+
+  try {
+    const res = await fetch('/api/contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body
+    });
+    if (!res.ok) throw 0;
+    statusEl.textContent = 'Dziękujemy! Wysłano.';
+    form.reset();
+  } catch {
+    statusEl.textContent = 'Błąd wysyłki. Spróbuj ponownie.';
+  }
 });
 </script>
 
