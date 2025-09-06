@@ -961,7 +961,7 @@ form.addEventListener('submit', async (e) => {
   const fd = new FormData(form);
   if (fd.get('company')) return; // honeypot
 
-  const body = new URLSearchParams(fd); // <-- kluczowa zmiana (url-encoded)
+  const body = new URLSearchParams(fd); // <-- to jest kluczowe
   statusEl.textContent = 'Wysyłanie…';
 
   try {
@@ -970,15 +970,15 @@ form.addEventListener('submit', async (e) => {
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body
     });
-    if (!res.ok) throw 0;
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) throw new Error(data.error || 'HTTP ' + res.status);
     statusEl.textContent = 'Dziękujemy! Wysłano.';
     form.reset();
-  } catch {
-    statusEl.textContent = 'Błąd wysyłki. Spróbuj ponownie.';
+  } catch (err) {
+    statusEl.textContent = 'Błąd wysyłki: ' + (err.message || 'Spróbuj ponownie.');
   }
 });
 </script>
-
 
 
 
