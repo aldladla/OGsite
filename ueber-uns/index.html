@@ -760,32 +760,32 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 
 
-                            <nav class="c-breadcrumb" aria-label="Breadcrumb">
-                                <div class="o-wrapper">
-                                    <p id="breadcrumb" class="u-hidden-visually">Sie sind hier:</p>
-                                    <ol class="c-breadcrumb-list o-list-inline c-breadcrumb-list--2-items">
+<nav class="c-breadcrumb" aria-label="Breadcrumb">
+  <div class="o-wrapper">
+    <p id="breadcrumb" class="u-hidden-visually">Sie sind hier:</p>
+    <ol class="c-breadcrumb-list o-list-inline c-breadcrumb-list--2-items">
+      <li class="c-breadcrumb-list__item">
+        <a href="../index.html" class="navigation-breadcrumb__anchor">Strona Główna</a>
+      </li>
+      <li class="c-breadcrumb-list__item">
+        <span class="navigation-breadcrumb__anchor navigation-breadcrumb__anchor--current" aria-current="page">O Nas</span>
+      </li>
+    </ol>
+  </div>
+</nav>
 
+<style>
+  .c-breadcrumb {
+    margin-bottom: 32px;
+  }
 
+  @media (max-width: 899px) {
+    .c-breadcrumb {
+      margin-bottom: 24px;
+    }
+  }
+</style>
 
-                                        <li class="c-breadcrumb-list__item">
-                                            <a href="../index.html" class="navigation-breadcrumb__anchor">Strona
-                                                Główna</a>
-                                        </li>
-
-
-
-
-                                        <li class="c-breadcrumb-list__item">
-                                            <span
-                                                class="navigation-breadcrumb__anchor navigation-breadcrumb__anchor--current"
-                                                aria-current="page">O Nas</span>
-                                        </li>
-
-
-
-                                    </ol>
-                                </div>
-                            </nav>
 
 
 
@@ -1099,6 +1099,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                                         left: calc(50% + var(--marker-offset));
                                     }
                                 }
+                                .section-o-nas { margin-top: 24px; }
+
+@media (min-width: 900px) {
+  .section-o-nas { margin-top: 32px; }
+}
                             </style>
 
                             <style>
