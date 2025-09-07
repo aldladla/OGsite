@@ -871,103 +871,63 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 
 
-<!-- KONTAKT – CTA + dane -->
-<div id="c186"
-  class="o-frame o-frame--default o-frame--type-text o-frame--layout-default o-frame--size-default o-frame--height-default o-frame--background-none u-margin-top-default u-margin-bottom-default">
-  <div class="o-frame-wrapper">
-    <div class="o-frame-wrapper__inner">
-      <div class="o-wrapper">
-        <div class="o-layout">
-          <div class="o-layout__item">
-
-            <header class="c-header u-margin-bottom-default" style="text-align:center">
-              <h2 class="u-heading u-heading--h2"><span>Skontaktuj się z nami</span></h2>
-              <p class="c-paragraph" style="opacity:.85">Odpowiadamy szybko i konkretnie — najczęściej w&nbsp;ciągu 1 dnia roboczego.</p>
-            </header>
-
-            <div class="o-layout o-layout--auto">
-              <!-- KAFEL: Telefon -->
-              <div class="o-layout__item u-1/1 u-1/3@tablet">
-                <div class="c-infocard u-margin-bottom-default" style="border:1px solid rgba(0,0,0,.08);border-radius:14px;padding:16px">
-                  <p class="u-margin-bottom-small" style="display:flex;align-items:center;gap:.5rem;font-weight:700">
-                    <svg class="material-icon primary" aria-hidden="true"><use xlink:href="#call_black_24dp"/></svg>
-                    Telefon
-                  </p>
-                  <p class="c-paragraph u-margin-bottom-small"><a href="tel:+48451234567">+48 451 234 567</a></p>
-                  <p class="u-text-small" style="opacity:.75">Pon–Pt: 08:00–18:00</p>
-                </div>
-              </div>
-
-              <!-- KAFEL: E-mail -->
-              <div class="o-layout__item u-1/1 u-1/3@tablet">
-                <div class="c-infocard u-margin-bottom-default" style="border:1px solid rgba(0,0,0,.08);border-radius:14px;padding:16px">
-                  <p class="u-margin-bottom-small" style="display:flex;align-items:center;gap:.5rem;font-weight:700">
-                    <svg class="material-icon primary" aria-hidden="true"><use xlink:href="#mail_black_24dp"/></svg>
-                    E‑mail
-                  </p>
-                  <p class="c-paragraph u-margin-bottom-small"><a href="mailto:biuro@ssh-polska.pl">biuro@ssh‑polska.pl</a></p>
-                  <p class="u-text-small" style="opacity:.75">Najczęściej odpisujemy tego samego dnia.</p>
-                </div>
-              </div>
-
-              <!-- KAFEL: Adres -->
-              <div class="o-layout__item u-1/1 u-1/3@tablet">
-                <div class="c-infocard u-margin-bottom-default" style="border:1px solid rgba(0,0,0,.08);border-radius:14px;padding:16px">
-                  <p class="u-margin-bottom-small" style="display:flex;align-items:center;gap:.5rem;font-weight:700">
-                    <svg class="material-icon primary" aria-hidden="true"><use xlink:href="#location_on_black_24dp"/></svg>
-                    Siedziba
-                  </p>
-                  <p class="c-paragraph u-margin-bottom-small">ul.&nbsp;Władysława Lercha&nbsp;6, 02‑992 Warszawa</p>
-                  <p class="u-text-small" style="opacity:.75">Spotkania po wcześniejszym umówieniu.</p>
-                </div>
-              </div>
-            </div>
+<!-- KONTAKT – CTA + dane (nowe) -->
+<section class="contact-top">
 
 
+  <div class="contact-cards">
+    <!-- Telefon -->
+    <article class="contact-card">
+      <div class="contact-card__icon" aria-hidden="true">📞</div>
+      <h3 class="contact-card__title">Telefon</h3>
+      <p class="contact-card__main"><a href="tel:+48451234567">+48 451 234 567</a></p>
+      <p class="contact-card__sub">Pon–Pt: 08:00–18:00</p>
+    </article>
 
-            <!-- Mini-RODO -->
-            <p class="u-text-small u-margin-top-small" style="opacity:.75;text-align:center">
-              Przesyłając do nas wiadomość, akceptujesz przetwarzanie danych w celu obsługi zapytania.
-              Szczegóły: <a href="/politykaprywatnosci/index.html">Polityka prywatności</a>.
-            </p>
+    <!-- E‑mail -->
+    <article class="contact-card">
+      <div class="contact-card__icon" aria-hidden="true">✉️</div>
+      <h3 class="contact-card__title">E‑mail</h3>
+      <p class="contact-card__main"><a href="mailto:biuro@ssh-polska.pl">biuro@ssh‑polska.pl</a></p>
+      <p class="contact-card__sub">Najczęściej odpisujemy tego samego dnia.</p>
+    </article>
 
-          </div>
-        </div>
-      </div>
-    </div>
+    <!-- Siedziba -->
+    <article class="contact-card">
+      <div class="contact-card__icon" aria-hidden="true">📍</div>
+      <h3 class="contact-card__title">Siedziba</h3>
+      <p class="contact-card__main">ul. Władysława Lercha 6,<br>02‑992 Warszawa</p>
+      <p class="contact-card__sub">Spotkania po wcześniejszym umówieniu.</p>
+    </article>
   </div>
-</div>
+</section>
 
-<!-- === FORMULARZ: DÓŁ STRONY === -->
 <section id="kontakt-form" class="contact-form-block u-margin-top-large">
-  <header class="c-header u-margin-bottom-small">
+  <header class="c-header u-margin-bottom-small" style="text-align: center;">
     <h2 class="u-heading u-heading--h2">Napisz do nas</h2>
     <p class="u-color-muted">Wypełnij formularz – odpowiemy możliwie szybko.</p>
   </header>
 
-  <div class="contact-card">
+
+  <div class="contact-card contact-card--form">
     <form id="contact-form" class="contact-form" novalidate>
       <div class="form-grid">
         <div class="form-field">
           <label for="cf-name">Imię i nazwisko <span class="req">*</span></label>
           <input id="cf-name" name="name" class="c-input" type="text" required minlength="2" autocomplete="name">
         </div>
-
         <div class="form-field">
           <label for="cf-email">E‑mail <span class="req">*</span></label>
           <input id="cf-email" name="email" class="c-input" type="email" required autocomplete="email">
         </div>
-
         <div class="form-field">
           <label for="cf-phone">Telefon (opcjonalnie)</label>
           <input id="cf-phone" name="phone" class="c-input" type="tel" inputmode="tel" placeholder="+48 600 000 000">
         </div>
-
         <div class="form-field form-field--full">
           <label for="cf-msg">Wiadomość <span class="req">*</span></label>
           <textarea id="cf-msg" name="message" class="c-input" rows="7" required></textarea>
         </div>
-
         <div class="form-field form-field--full">
           <label class="consent">
             <input type="checkbox" name="gdpr" required>
@@ -995,53 +955,83 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 
 <style>
-/* Karta + pozycja */
-.contact-form-block{ max-width: 920px; margin: 0 auto; }
+/* Nagłówek sekcji */
+.contact-top__head { text-align:center; }
+.contact-top__lead { opacity:.85; }
+
+/* Siatka kafli (1 kol → 3 kol ≥900px) */
+.contact-cards{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:16px;
+  max-width: 980px;
+  margin: 0 auto 10px;
+}
+@media (min-width:900px){
+  .contact-cards{ grid-template-columns: repeat(3, 1fr); gap:18px; }
+}
+
+/* Kafelek */
 .contact-card{
-  background:#f6f7f9;
-  border:1px solid #e5e7eb;
+  background:#fff;
+  border:1px solid #E6E8EC;
+  border-radius:14px;
+  padding:18px;
+  box-shadow:0 10px 24px rgba(0,0,0,.06);
+  transition: box-shadow .15s, transform .06s, border-color .15s;
+}
+.contact-card:hover{ border-color:#DADDE2; box-shadow:0 14px 30px rgba(0,0,0,.08); }
+.contact-card__icon{
+  width:40px; height:40px; border-radius:50%;
+  display:grid; place-items:center;
+  background:#f5f6f8;
+  font-size:18px; margin-bottom:10px;
+}
+.contact-card__title{ font-size:1.05rem; font-weight:700; margin:0 0 .25rem; }
+.contact-card__main{ margin:0 0 .15rem; font-weight:700; }
+.contact-card__main a{ text-decoration:none; }
+.contact-card__sub{ margin:0; opacity:.75; font-size:.92rem; }
+
+/* Formularz jako karta */
+.contact-card--form{
+  background:#fff;
+  border:1px solid #E6E8EC;
   border-radius:16px;
-  padding:24px;
-  box-shadow:0 12px 32px rgba(0,0,0,.07);
+  padding:28px;
+  box-shadow:0 10px 24px rgba(0,0,0,.06);
 }
 
-/* Siatka */
-.contact-form .form-grid{
-  display:grid; gap:18px; grid-template-columns:1fr;
-}
-@media (min-width: 900px){
-  .contact-form .form-grid{ grid-template-columns: 1fr 1fr; }
-  .contact-form .form-field--full{ grid-column: 1 / -1; }
+/* Siatka formularza (utrzymana) */
+.contact-form-block{ max-width: 960px; margin: 0 auto; }
+.contact-form .form-grid{ display:grid; gap:18px; grid-template-columns:1fr; }
+@media (min-width:900px){
+  .contact-form .form-grid{ grid-template-columns:1fr 1fr; gap:20px; }
+  .contact-form .form-field--full{ grid-column:1 / -1; }
 }
 
-/* Etykiety i pola – POWIĘKSZONE */
-.contact-form label{ display:block; font-weight:600; margin-bottom:8px; }
+/* Pola – większe */
+.contact-form label{ display:block; font-weight:600; margin-bottom:8px; color:#202124; }
 .contact-form .c-input{
   width:100%;
-  font-size:1.05rem;
-  padding:14px 14px;
-  border:1px solid #cfd4da;
+  font-size:1.06rem;
+  padding:14px;
+  border:1px solid #C9D0D6;
   border-radius:10px;
-  line-height:1.2;
+  line-height:1.25;
+  transition: border-color .15s, box-shadow .15s;
 }
-.contact-form textarea.c-input{ min-height: 180px; }
-.contact-form .req{ color:#d2091e; font-weight:700; }
-.consent{ font-weight:400; display:flex; align-items:center; gap:.6rem; }
+.contact-form .c-input:focus{
+  outline:none;
+  border-color:#d2091e;
+  box-shadow:0 0 0 4px rgba(210,9,30,.12);
+}
+.contact-form textarea.c-input{ min-height:190px; resize:vertical; }
+.consent{ display:flex; gap:.6rem; align-items:center; font-weight:500; }
 
-/* Akcje + status */
-.form-actions{ display:flex; gap:14px; align-items:center; margin-top:12px; }
-.btn.btn-large{ padding:14px 22px; font-size:1.05rem; border-radius:10px; }
+.form-actions{ display:flex; gap:14px; align-items:center; margin-top:8px; }
+.btn.btn-large{ padding:14px 22px; font-size:1.06rem; border-radius:10px; }
 .form-status{ font-size:.98rem; opacity:.9; }
-.form-status.ok{ color:#0a7a26; }
-.form-status.err{ color:#b00020; }
-.privacy-note{ margin-top:16px; font-size:.95rem; color:#444; }
-
-/* Honeypot */
 .hp{ position:absolute; left:-9999px; width:1px; height:1px; }
-
-/* Prosta walidacja wizualna */
-.c-input.is-invalid{ border-color:#d2091e; box-shadow:0 0 0 3px rgba(210,9,30,.12); }
-
 
 </style>
 
